@@ -5,7 +5,7 @@ io.sockets.on('connection', function(socket){
 	socket.broadcast.emit('message', {
 		user: "Node",
 		timestamp: new Date(),
-		message: "Node Joined the Room"
+		message: "A user joined the room"
 	});
 
 	socket.on('message', function(data){

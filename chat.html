@@ -48,6 +48,7 @@
 
 			socket.emit('message', data);
 			addMessage(data);
+			this.chat.value = "";
 		};
 
 		var addMessage = function(data) {
