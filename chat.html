@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://localhost:1337/socket.io/socket.io.js"></script>
 	<style type="text/css">
 		body {
 			color: #333;
@@ -24,19 +24,17 @@
     <div id="chat-area" class="padded"></div>
 
 	<form id="chat-submit">
+		<label for="fName">Name</label>
+		<input type="text" name="name" id="fName" value="" /><br />
 		<textarea name="chat" class="padded"></textarea><br />
 		<input type="submit" value="Send" />
 	</form>
 
 	<script>
-        var socket = io.connect('http://localhost');
-        socket.on(
-            'message',
-            function (data) {
-				var html = "<div><strong>"+data.user+"</strong>: "+data.message+"</div>";
-				div.innerHTML += html;
-            }
-        );
+        var socket = io.connect('http://localhost:1337');
+        socket.on('message', function(data){
+			addMessage(data);
+		});
 
 		var div = document.getElementById('chat-area'),
 			form = document.getElementById('chat-submit');
@@ -44,10 +42,17 @@
 		form.onsubmit = function(e){
 			e.preventDefault();
 			var data = {
+				user: this.name.value,
 				message: this.chat.value
 			};
 
 			socket.emit('message', data);
+			addMessage(data);
+		};
+
+		var addMessage = function(data) {
+			var html = "<div><strong>"+data.user+"</strong>: "+data.message+"</div>";
+			div.innerHTML += html;
 		};
     </script>
 </body>

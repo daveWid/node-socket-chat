@@ -1,31 +1,24 @@
-// server.js
-var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
+// The socket port
+var io = require('socket.io').listen(1337);
 
-// Start an HTTP server on port 8080
-app.listen(1337);
+io.sockets.on('connection', function(socket){
+	socket.broadcast.emit('message', {
+		user: "Node",
+		timestamp: new Date(),
+		message: "Node Joined the Room"
+	});
 
-function handler(req, res) {
-    // Hardcode *all* HTTP requests to this server to serve up index.html
-    fs.readFile(
-        __dirname + '/index.html',
-        function (err, data) {
-            if (err) {
-                res.writeHead(500);
-                return res.end('Error loading index.html');
-            }
+	socket.on('message', function(data){
+		socket.broadcast.emit('message', {
+			user: data.user,
+			timestamp: new Date(),
+			message: data.message
+		});
+	});
+});
 
-            res.writeHead(200);
-            res.end(data);
-        }
-    );
-}
-
-// After any socket connects, SEND it a custom 'news' event
-io.sockets.on(
-    'connection',
-    function (socket) {
-        socket.emit('message', { user:"Node", time:new Date(), message: "I am a robot!" });
-    }
-);
+// The webserver connection
+var connect = require('connect');
+connect.createServer(
+    connect.static(__dirname)
+).listen(8080);
