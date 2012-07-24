@@ -2,18 +2,53 @@
 <html>
 <head>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        // Make a socket connection and wait to RECEIVE custom 'news' event
-        var socket = io.connect('http://localhost');
-        socket.on(
-            'news',
-            function (data) {
-                console.log(data);
-            }
-        );
-    </script>
+	<style type="text/css">
+		body {
+			color: #333;
+			font-family: "Helvetica Neue", sans-serif;
+			font-size: 14px;
+		}
+		.padded {
+			width: 200px;
+			padding: 1em;
+		}
+		#chat-area {
+			border: 1px solid #EEE;
+			margin-bottom: 1em;
+			height:300px;
+			overflow-y: auto;
+		}
+	</style>
 </head>
 <body>
-    <p>index.html</p>
+    <div id="chat-area" class="padded"></div>
+
+	<form id="chat-submit">
+		<textarea name="chat" class="padded"></textarea><br />
+		<input type="submit" value="Send" />
+	</form>
+
+	<script>
+        var socket = io.connect('http://localhost');
+        socket.on(
+            'message',
+            function (data) {
+				var html = "<div><strong>"+data.user+"</strong>: "+data.message+"</div>";
+				div.innerHTML += html;
+            }
+        );
+
+		var div = document.getElementById('chat-area'),
+			form = document.getElementById('chat-submit');
+
+		form.onsubmit = function(e){
+			e.preventDefault();
+			var data = {
+				message: this.chat.value
+			};
+
+			socket.emit('message', data);
+		};
+    </script>
 </body>
 </html>

@@ -4,7 +4,7 @@ var app = require('http').createServer(handler)
   , fs = require('fs')
 
 // Start an HTTP server on port 8080
-app.listen(8080);
+app.listen(1337);
 
 function handler(req, res) {
     // Hardcode *all* HTTP requests to this server to serve up index.html
@@ -26,6 +26,6 @@ function handler(req, res) {
 io.sockets.on(
     'connection',
     function (socket) {
-        socket.emit('news', {hello: 'world'});
+        socket.emit('message', { user:"Node", time:new Date(), message: "I am a robot!" });
     }
 );
