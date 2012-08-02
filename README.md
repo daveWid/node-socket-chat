@@ -22,8 +22,8 @@ command.
 node server.js
 ```
 
-Then just visit [localhost](http://localhost) on as many browsers as you wish and
-chat away!
+Then just visit [localhost:8080/chat.html](http://localhost:8080/chat.html) on as
+many browsers as you wish and chat away!
 
 ## Want to chat with someone else?
 
