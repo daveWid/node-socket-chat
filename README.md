@@ -25,6 +25,8 @@ node server.js
 Then just visit [localhost:8080/chat.html](http://localhost:8080/chat.html) on as
 many browsers as you wish and chat away!
 
+You will start to see the server activity logged directly in the terminal.
+
 ## Want to chat with someone else?
 
 If you want to chat with someone else you will need to modify this line in `chat.html`.
@@ -34,4 +36,8 @@ If you want to chat with someone else you will need to modify this line in `chat
 ```
 
 Change the localhost (and only localhost, keep the port) to your domain.
+
+## Turn off the server
+
+As always a quick `control + c` will shutdown the server.
  
